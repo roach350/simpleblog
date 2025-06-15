@@ -1,15 +1,17 @@
 # SimpleBlog
-
+## NOTE
+This project is not in a functional state and is in heavy development
 ## Overview
-SimpleBlog takes a series of plain text files and turns them into a static HTML blog
+SimpleBlog takes a series of simple text files and turns them into a static HTML blog
 ### Features
 - code formating
-- simple MarkDown like syntax
+- simple syntax
 - minimal depencies
-- fast (written in C)
+- fast (written in C++)
 
 ### File Structure
 File structure is as follows:
+```
 	website_dir/
 		index.html
 		manifest.sb
@@ -32,7 +34,7 @@ File structure is as follows:
 			lib/
 				main.css
 				main.js
-			
+```			
 ## Compilation 
 
 ### Dependencies
