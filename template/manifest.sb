@@ -1,0 +1,17 @@
+
+[pages]
+blog=blog.html
+downloads=downloads.html
+about=about.html
+
+
+[lib]
+css=main.css //included in all html files
+
+
+//per page includes
+[blog]
+
+
+
+

@@ -1,0 +1,60 @@
+		body { 
+			margin: 0; 
+			padding: 0; 
+		} 
+
+		header { 
+			background-color: #ffffff; 
+			color: #000000; 
+			text-align: center; 
+		} 
+
+		nav { 
+			#background-color: #242424; 
+			padding: 3px; 
+		} 
+
+		nav a { 
+			text-decoration: none; 
+			padding: 3px; 
+			margin-right: 10px; 
+			display: inline-block; 
+		} 
+
+		.container { 
+			display: flex; 
+			justify-content: space-between; 
+			max-width: 95%; 
+			margin: 0 auto; 
+			padding: 20px; 
+		} 
+
+		article p { 
+			text-align: justify; 
+		} 
+
+		main { 
+			flex: 2; 
+		} 
+
+		article { 
+			margin-bottom: 20px; 
+			padding: 10px 20px; 
+			border: 1px solid black; 
+			margin-right: 10px; 
+		} 
+
+		aside { 
+			flex: 1; 
+			background-color: lightgrey; 
+			padding: 10px; 
+		} 
+
+		footer { 
+			background-color: black; 
+			color: white; 
+			text-align: center; 
+			position: fixed; 
+			bottom: 0; 
+			width: 100%; 
+		} 
