@@ -1,17 +1,23 @@
 
 [pages]
-blog=blog.html
-downloads=downloads.html
-about=about.html
+blog=blog.html;
+
+downloads=downloads.html;
+about=about.html;
 
 
 [lib]
-css=main.css //included in all html files
+css=main.css; //included in all html files
 
 
 //per page includes
 [blog]
 
+[about]
+
+[test]
+
+[downloads]
 
 
 
