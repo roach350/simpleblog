@@ -54,7 +54,6 @@ int parsePageIndex(){
 		}
 		page[i] = 0; //null terminator
 		page_count++;
-		page_index++;
 		i = 0; // reset index
 		while((c = fgetc(manifest_file)) != ';'){
 			/* get url */
@@ -76,7 +75,7 @@ int parsePageIndex(){
 
 		web_pages[page_index].setTitle(page);
 		web_pages[page_index].setURL(url);
-
+		page_index++;
 		//reset and parse next line
 		initStr(page, 32);
 		initStr(url, 64);
@@ -200,7 +199,7 @@ int parseManifest(){
 
 
 
-
+	fclose(manifest_file);
 	return 1; //success
 
 }

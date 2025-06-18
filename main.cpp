@@ -10,7 +10,9 @@
 #include <iostream>
 
 #include "config.h"
-#include "parse.h"
+//#include "parse.h"
+#include "write.h"
+
 
 void printHelp(){
 
@@ -60,6 +62,9 @@ int main(int argc, char *argv[]){
 	if (strcmp(mode, "compile") == 0){
 		loadFiles();
 		parseManifest();
+
+		writeAll();
+
 	}	
 	
 
