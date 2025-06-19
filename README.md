@@ -1,12 +1,14 @@
 # SimpleBlog
+A minimal blog compiler written in C++
 ## NOTE
-This project is not in a functional state and is in heavy development
+This project is in a semi functional state as it is in heavy development
 ## Overview
-SimpleBlog takes a series of simple text files and turns them into a static HTML blog
+SimpleBlog takes a series of simple text files and turns them into a static HTML blog.<br>
+It is up to you for how you want host it.
 ### Features
 - code formating
 - simple syntax
-- minimal depencies
+- minimal dependencies
 - fast (written in C++)
 
 ### File Structure
@@ -36,13 +38,20 @@ website_dir/
 			main.js
 ```			
 ## Compilation 
+```
+chmod +x build.sh
+./build.sh
 
+```
+A makefile will likely be introduced as the project matures.
 ### Dependencies
+- standard C/C++ libraries (stdio, stdlib, string, iostream, etc.)
+- sys/types.h
+- sys/stat.h
+- unistd.h
 
 ## Usage
 ```
 simpleblog init <dir>
 simpleblog compile <dir>
-
-
 ```
