@@ -40,4 +40,9 @@ website_dir/
 ### Dependencies
 
 ## Usage
-	simpleblog compile
+```
+simpleblog init <dir>
+simpleblog compile <dir>
+
+
+```

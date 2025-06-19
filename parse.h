@@ -30,6 +30,12 @@ int loadFiles(){
 
 }
 
+int parseBlogs(){
+
+
+}
+
+
 int parsePageIndex(){
 	std::cout << "page index found\n";
 	char c = 0;
@@ -74,7 +80,7 @@ int parsePageIndex(){
 		std::cout << "Found index for " << page << '@' << url << '\n'; 		
 
 		web_pages[page_index].setTitle(page);
-		web_pages[page_index].setURL(url);
+		web_pages[page_index].setHTML(url);
 		page_index++;
 		//reset and parse next line
 		initStr(page, 32);

@@ -12,7 +12,7 @@
 #include "config.h"
 //#include "parse.h"
 #include "write.h"
-
+#include "folder.h"
 
 void printHelp(){
 
@@ -20,8 +20,9 @@ void printHelp(){
 	std::cout << "\tVer: " << VERSION_STRING << '\n';
 	std::cout << "USAGE: ./simpleblog <mode> <arguments>\n\n";
 	std::cout << "Modes:\n";
-	std::cout << "\thelp\t(display help)\n";  std::cout << "\tcompile\t(parse and compile blog)\n"; //std::cout << "\texport <dir>\t(export contacts to location)\n"; std::cout << "\tlist\t(list all loaded contacts)\n";
-
+	std::cout << "\thelp\t(display help)\n";  
+	std::cout << "\tinit <dir>\t(setup a website directory structure)\n"; 
+	std::cout << "\tcompile <dir>\t(parse .sb files and compile blog)\n";
 
 }
 
@@ -35,7 +36,8 @@ int main(int argc, char *argv[]){
 	/* parse arguments */
 	switch (argc){
 		case 1:
-			std::cout << "No arguments provided: try simpleblog help.\n";
+			std::cout << "No arguments provided: try 'simpleblog help'.\n";
+			return 0;
 			break;
 		case 2:
 			mode = argv[1];
@@ -58,7 +60,11 @@ int main(int argc, char *argv[]){
 	if (strcmp(mode, "help") == 0){
 		printHelp();
 	}	
-
+	
+	if (strcmp(mode, "init") == 0){
+		makeDirs(verb1);
+	}
+	
 	if (strcmp(mode, "compile") == 0){
 		loadFiles();
 		parseManifest();
