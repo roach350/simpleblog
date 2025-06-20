@@ -21,7 +21,7 @@ void write_nav(FILE *fptr){
 	fprintf(fptr, "\t\t<hr>\n");
 	fprintf(fptr, "\t\t\t<nav>\n");
 	for (int i = 0; i < page_count; i++){
-		fprintf(fptr, "\t\t\t\t<a href='%s'>%s</a>\n", web_pages[i].getURL(), web_pages[i].getTitle());
+		fprintf(fptr, "\t\t\t\t<i><a href='%s'>%s</a></i>\n", web_pages[i].getHTML(), web_pages[i].getTitle());
 	}
 
 

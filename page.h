@@ -8,9 +8,9 @@ class page_t{
 		char title[64];
 		char url[64];
 		char html[64];
-		char base_url[64];
 		char css[64]; //css address
 		char js[64]; //js address
+		char sb[64]; // markup file location
 	public:
 		page_t(const char *t, const char *u){
 			strncpy(title, t, 64);
@@ -29,11 +29,6 @@ class page_t{
 			return url;
 		}
 
-		char *getProjectURL(){
-			return base_url;
-
-		}
-
 		char *getHTML(){
 			return html;
 		}
@@ -43,28 +38,30 @@ class page_t{
 		}
 
 		void setHTML(const char *u){
-			/* set file name*/
 			strncpy(html, u, 64);
-			/*set URL relative index */
-			std::string temp = "";
-			temp += "/web/pages/";
-			temp += html;
-			strncpy(url, temp.c_str(), 64);
 			
 
 		}
 
-		void setProjectURL(const char *u){
+		void setURL(const char *u){
 			/* set location relative to executable path */
 
 			std::string temp = u;
-			temp += "/web/pages/";
 			temp += html;
-			strncpy(base_url, temp.c_str(), 64);
+			strncpy(url, temp.c_str(), 64);
 			
 		}
 		
+		void setSB(const char *url){
+			strncpy(sb, url, 64);
+		}
+
+		char *getSB(){
+			return sb;
+		}
+		
 		void print(){
+			/* for debugging */
 			std::cout << "page_t: " << title << ' ' << url << ' ' << css << ' ' << js << '\n';
 
 		}

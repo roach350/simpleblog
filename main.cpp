@@ -23,7 +23,7 @@ void printHelp(){
 	std::cout << "\thelp\t(display help)\n";  
 	std::cout << "\tinit <dir>\t(setup a website directory structure)\n"; 
 	std::cout << "\tcompile <dir>\t(parse .sb files and compile blog)\n";
-
+	std::cout << "\tparse <dir>\t(parse .sb files, does not write)\n";
 }
 
 
@@ -66,14 +66,18 @@ int main(int argc, char *argv[]){
 	}
 	
 	if (strcmp(mode, "compile") == 0){
-		loadFiles();
+		loadFiles(verb1);
 		parseManifest();
 
-		writeAll();
+		writeAll(verb1);
 
 	}	
 	
+	if (strcmp(mode, "parse") == 0){
+		loadFiles(verb1);
+		parseManifest();
 
-
+	}	
+	
 	return 0;
 }

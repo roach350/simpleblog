@@ -5,7 +5,7 @@
 
 /* files */
 #define MANIFEST_DIR "template/manifest.sb"
-#define INDEX_LOCATION "testing/index.html" //for testing
+#define INDEX_FILE_NAME "index.html" //for testing
 
 /* pages */
 #define MAX_WEB_PAGES 32
