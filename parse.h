@@ -4,7 +4,7 @@
 
 /* pages and assets */
 
-page_t web_pages[MAX_WEB_PAGES];
+page_t web_pages[PAGES_MAX];
 
 int page_count = 0;
 
@@ -27,6 +27,9 @@ int loadFiles(const char *dir){
         	std::cout << "Failed to open manifest.sb\n";
 		return 0;
     	}
+
+
+
 
 	return 1;
 

@@ -13,6 +13,9 @@
 //#include "parse.h"
 #include "write.h"
 #include "folder.h"
+#include "blog.h"
+
+
 
 void printHelp(){
 

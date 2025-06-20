@@ -1,8 +1,14 @@
-[blog_title]
-date=06152025;
+[blog]
+title=Blog Post;
+author=Some Bloke;
+month=06;
+day=16;
+year=2005;
 summary=This is an example blog;
-<content_start>
+
+
+`
 text here
 
 
-<content_end>
+`

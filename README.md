@@ -11,6 +11,13 @@ It is up to you for how you want host it.
 - minimal dependencies
 - fast (written in C++)
 
+### TODO
+SimpleBlog is a work in progress at the moment, this is a list of core functionality that needs to be implemented before it is useable:
+- index.sb parser for blog posts and other pages
+- blog index html generator
+- top x newest blog html generator
+- per blog page html generator
+
 ### File Structure
 Here is an example file structure:
 ```

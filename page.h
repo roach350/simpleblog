@@ -72,7 +72,7 @@ class page_t{
 
 int find_page(page_t array[], const char *key){
 	
-	for (int i = 0; i < MAX_WEB_PAGES; i++){
+	for (int i = 0; i < PAGES_MAX; i++){
 		if (strncmp(array[i].getTitle(), key, 64) == 0){
 			return i;
 		}
