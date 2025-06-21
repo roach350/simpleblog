@@ -28,7 +28,7 @@ class blog_post_t{
 			delete contents;
 		}
 	
-
+		/* the setters */
 		void setTitle(const char *t){
 			strncpy(title, t, 64);
 		}
@@ -63,7 +63,38 @@ class blog_post_t{
 
 		}
 
-	
+		/* the getters*/
+
+
+		char *getTitle(){
+			return title;
+		}
+
+		int getM(){
+			return month;
+		}
+
+		int getD(){
+
+			return day;
+		}
+
+		int getY(){
+			return year;
+		}
+
+		char *getSummary(){
+			return summary;
+
+		}
+
+		char *getAuthor(){
+
+			return author;
+		}
 
 
 };
+
+
+

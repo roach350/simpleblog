@@ -1,4 +1,4 @@
-#include "lib.h"
+//#include "lib.h"
 #include "page.h"
 
 
@@ -8,8 +8,12 @@ page_t web_pages[PAGES_MAX];
 
 int page_count = 0;
 
-char main_css[64]; //main css for all websites
+/* strings */
 
+char main_css[64]; //main css for all websites
+char blog_footer[256];
+char blog_title[128];
+char blog_slogan[128];
 
 
 /* files */
@@ -91,6 +95,7 @@ int parseLib(){
 	char c = 0;
 	char token[32];
 	char value[64];
+	int equal_set = 0; //used for including spaces
 	while(!(feof(manifest_file))){
 
 		int i = 0; // page name index
@@ -100,6 +105,8 @@ int parseLib(){
 				token[i] = c;
 				i++;
 			}
+
+
 			if (c == '['){
 				fseek(manifest_file, -1, SEEK_CUR);//decrement pointer
 				// end of section
@@ -107,6 +114,7 @@ int parseLib(){
 			}		
 		
 		}
+		equal_set = 1;
 		token[i] = 0; //null terminator
 		i = 0; // reset index
 		while((c = fgetc(manifest_file)) != ';'){
@@ -115,6 +123,11 @@ int parseLib(){
 				value[i] = c;
 				i++;
 			}
+
+			if (c == ' ' && equal_set == 1){
+				value[i] = c;
+				i++;		
+			}
 			if (c == '['){
 				fseek(manifest_file, -1, SEEK_CUR);//decrement pointer
 				// end of section
@@ -123,14 +136,29 @@ int parseLib(){
 
 		
 		}
+		equal_set = 0;
 		value[i] = 0; //null terminator
-
+		
 		std::cout << "\tVALUE " << token << " = "  << value << '\n'; 		
 		//parse and set values
 
 		if (strcmp(token, "css") == 0){
 			strncpy(main_css, value, 64); 
 		}
+	
+		if (strcmp(token, "title") == 0){
+			strncpy(blog_title, value, 128); 
+		}	
+
+
+		if (strcmp(token, "slogan") == 0){
+			strncpy(blog_slogan, value, 128); 
+		}
+
+		if (strcmp(token, "footer") == 0){
+			strncpy(blog_footer, value, 256); 
+		}
+
 
 		//reset and parse next line
 		initStr(token, 32);

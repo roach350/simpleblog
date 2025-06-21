@@ -9,12 +9,13 @@
 
 #include <iostream>
 
+#include "lib.h"
 #include "config.h"
 //#include "parse.h"
-#include "write.h"
 #include "folder.h"
-#include "blog.h"
+#include "blog_parser.h"
 
+#include "write.h"
 
 
 void printHelp(){
@@ -71,15 +72,28 @@ int main(int argc, char *argv[]){
 	if (strcmp(mode, "compile") == 0){
 		loadFiles(verb1);
 		parseManifest();
+		/*
+		FILE *test_blog;
+		test_blog = fopen("template/contents/blog/index.sb", "r");
+		parseBlog(test_blog, 0);
+		*/
 
 		writeAll(verb1);
+
+
+
+
 
 	}	
 	
 	if (strcmp(mode, "parse") == 0){
 		loadFiles(verb1);
 		parseManifest();
-
+		/*
+		FILE *test_blog;
+		test_blog = fopen("template/contents/blog/index.sb", "r");
+		parseBlog(test_blog, 0);
+		*/
 	}	
 	
 	return 0;

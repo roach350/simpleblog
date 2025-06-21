@@ -31,18 +31,52 @@ void write_nav(FILE *fptr){
 
 }
 
+void write_footer(FILE *fptr){
+	fprintf(fptr, "\t\t<footer>\n");
+	fprintf(fptr, "\t\t\t<p>%s</p>", blog_footer);
+	fprintf(fptr, "\t\t<footer>\n");
+
+}
+
+
+void write_blog_preview(FILE *fptr, int blog_index){
+
+
+	fprintf(fptr, "\t\t\t\t<article>\n");
+	fprintf(fptr, "\t\t\t\t\t<a href= ''><h2>%s</h2></a>\n", blogs[blog_index].getTitle());
+	fprintf(fptr, "\t\t\t\t\t<p><b>PUBLISHED </b>%i/%i/%i</p>\n", blogs[blog_index].getM(), blogs[blog_index].getD(), blogs[blog_index].getY());
+	fprintf(fptr, "\t\t\t\t\t<p><b>WRITTEN BY </b>%s</p>\n", blogs[blog_index].getAuthor());
+	fprintf(fptr, "\t\t\t\t\t<p>%s</p>\n", blogs[blog_index].getSummary());
+	fprintf(fptr, "\t\t\t\t</article>\n");
+
+}
+
+
+
+
+
+
+
+
+
 void write_index(FILE *fptr){
 	write_header(fptr);
 
 	fprintf(fptr, "\t<body>\n");
 	fprintf(fptr, "\t\t<header>\n");
-	fprintf(fptr, "\t\t\t<h1>%s</h1>\n", BLOG_TITLE);	
-	fprintf(fptr, "\t\t\t<i><p>%s</p></i>\n", BLOG_SLOGAN);	
+	fprintf(fptr, "\t\t\t<h1>%s</h1>\n", blog_title);	
+	fprintf(fptr, "\t\t\t<i><p>%s</p></i>\n", blog_slogan);	
 	fprintf(fptr, "\t\t</header>\n");
 
 	write_nav(fptr);
 
+	/*
+	//testing
+	write_blog_preview(fptr, 0);
 
+
+	*/
+	write_footer(fptr);
 	fprintf(fptr, "\t</body>\n");
 
 	fprintf(fptr, "</html>\n");
