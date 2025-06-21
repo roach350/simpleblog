@@ -37,7 +37,7 @@ int makeDirs(const char *dir){
 	pages_dir += dir;
 	pages_dir += "/web/pages";
 	lib_dir += dir;
-	lib_dir += "web/lib";
+	lib_dir += "/web/lib";
 
 	contents_dir += dir;
 	contents_dir += "/contents";
