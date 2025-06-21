@@ -72,12 +72,9 @@ int main(int argc, char *argv[]){
 	if (strcmp(mode, "compile") == 0){
 		loadFiles(verb1);
 		parseManifest();
-		/*
-		FILE *test_blog;
-		test_blog = fopen("template/contents/blog/index.sb", "r");
-		parseBlog(test_blog, 0);
-		*/
-
+		
+		findBlogs(verb1);
+		parseBlogs();
 		writeAll(verb1);
 
 
@@ -89,11 +86,8 @@ int main(int argc, char *argv[]){
 	if (strcmp(mode, "parse") == 0){
 		loadFiles(verb1);
 		parseManifest();
-		/*
-		FILE *test_blog;
-		test_blog = fopen("template/contents/blog/index.sb", "r");
-		parseBlog(test_blog, 0);
-		*/
+		findBlogs(verb1);
+		parseBlogs();
 	}	
 	
 	return 0;

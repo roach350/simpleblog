@@ -39,12 +39,6 @@ int loadFiles(const char *dir){
 
 }
 
-int parseBlogs(){
-
-
-}
-
-
 int parsePageIndex(){
 	
 	std::cout << "[page index found]\n";

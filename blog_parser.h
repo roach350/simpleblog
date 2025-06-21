@@ -2,13 +2,80 @@
 	SimpleBlog blog parser
 
 */
-
+#include <dirent.h>
 
 #include "blog.h"
 
 //setup blogs
 
 blog_post_t blogs[BLOG_MAX_POSTS];
+
+int blog_count = 0;
+
+
+int parseBlog(FILE *blog_file, int blog_index);
+int parseContents(FILE *blog_file, int blog_index);
+
+
+int findBlogs(const char *dir){
+	std::cout << "[PARSING BLOGS]\n";
+	/* setup */
+	struct dirent *de;
+	DIR *blog_dir;
+	int i = 0; //index
+
+	std::string blog_dir_str = dir;
+	blog_dir_str += "/contents/blog";
+	std::cout << "checking " << blog_dir_str.c_str() << " for blogs\n";
+	blog_dir = opendir(blog_dir_str.c_str());
+
+	if (blog_dir == NULL){
+		std::cout << "Could not load blog dir\n";
+		return 0;
+	}
+
+	/* index blogs */
+	while ((de = readdir(blog_dir)) != NULL){
+		if (de->d_name[0] != '.'){ //skip . , .. , and hidden files
+			
+			std::cout << "\tFound " <<  de->d_name << '\n';
+			std::string index_dir = blog_dir_str;
+			index_dir += "/";
+			index_dir += de->d_name;
+			index_dir += "/index.sb";
+
+			blogs[i].setSB(index_dir.c_str());		
+			blog_count++;
+			i++;
+		}
+	}
+	return 1;
+
+}
+
+
+int parseBlogs(){
+
+
+
+	for (int i = 0; i < blog_count; i++){
+		FILE *blog_file = fopen(blogs[i].getSB(), "r");
+		if (blog_file == NULL) {
+			std::cout << "couldn't open " << blogs[i].getSB() << '\n';
+			return 0;
+		}
+		parseBlog(blog_file, i);
+		fclose(blog_file);
+	}
+
+	return 1;
+}
+
+
+
+
+
+
 
 
 
@@ -32,7 +99,7 @@ int parseContents(FILE *blog_file, int blog_index){
 
 
 int parseBlog(FILE *blog_file, int blog_index){
-	std::cout << "[Parsing Blog Entry " << blog_index << "]\n";
+	std::cout << "\t[Parsing Blog Entry " << blog_index << "]\n";
 
 	char c = 0;
 	char token[32];

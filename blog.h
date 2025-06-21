@@ -93,7 +93,9 @@ class blog_post_t{
 			return author;
 		}
 
-
+		char *getSB(){
+			return sb;
+		}
 };
 
 

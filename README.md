@@ -7,6 +7,7 @@ SimpleBlog takes a series of simple text files and turns them into a static HTML
 It is up to you for how you want host it.
 ### Features
 - code formating
+- auto image size handling
 - simple syntax
 - minimal dependencies
 - fast (written in C++)
@@ -26,10 +27,12 @@ website_dir/
 	manifest.sb
 	contents/
 		blog/
-			index.sb
-			assets/
-				pic.png
+			blog_entry/
+				index.sb
+				assets/
+					pic.png
 		extra/
+			blog.sb
 			about.sb
 			home.sb
 			download.sb
