@@ -1,5 +1,5 @@
 # SimpleBlog
-A minimal blog compiler written in C++
+A minimal static blog generator (blog compiler) written in C++
 ## NOTE
 This project is in a semi functional state as it is in heavy development
 ## Overview
@@ -20,6 +20,9 @@ SimpleBlog is a work in progress at the moment, this is a list of core functiona
 - proper linking
 - auto index generation based on headings
 
+### Future Features
+- RSS
+- tagging
 
 ### File Structure
 Here is an example file structure:
