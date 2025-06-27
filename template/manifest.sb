@@ -1,23 +1,26 @@
-
 [pages]
-blog=blog.html;
-
-downloads=downloads.html;
-about=about.html;
+blog;
+downloads;
+about;
 
 
 [lib]
-css=main.css; //included in all html files
-
+css=web/lib/main.css;
+title=SimpleBlog;
+slogan=Insert Slogan Here;
+footer=Made with SimpleBlog;
 
 //per page includes
 [blog]
+html=web/pages/blog.html;
+sb=contents/extra/blog.sb;
 
 [about]
+html=web/pages/about.html;
+sb=contents/extra/about.sb;
 
-[test]
 
 [downloads]
-
-
+html=web/pages/downloads.html;
+sb=contents/extra/downloads.sb;
 

@@ -1,10 +1,7 @@
-#define VERSION_STRING "alpha"
+#define VERSION_STRING "0.1"
 
-#define BLOG_TITLE "SimpleBlog Reference"
-#define BLOG_SLOGAN "insert text here"
 
 /* files */
-#define MANIFEST_DIR "template/manifest.sb"
 #define INDEX_FILE_NAME "index.html" //for testing
 
 /* pages */

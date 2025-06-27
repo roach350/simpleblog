@@ -42,9 +42,15 @@ int findBlogs(const char *dir){
 			std::string index_dir = blog_dir_str;
 			index_dir += "/";
 			index_dir += de->d_name;
+			std::string html = index_dir;
+			html += "/index.html";
 			index_dir += "/index.sb";
+			
+			//set class data
+			blogs[i].setSB(index_dir.c_str());
+			blogs[i].setHTML(html.c_str());	
 
-			blogs[i].setSB(index_dir.c_str());		
+			//std::cout << "set html " << blogs[i].getHTML() << '\n';	
 			blog_count++;
 			i++;
 		}
@@ -77,8 +83,6 @@ int parseBlogs(){
 
 
 
-
-
 int parseContents(FILE *blog_file, int blog_index){
 	char c = 0;
 	int i = 0;
@@ -90,6 +94,7 @@ int parseContents(FILE *blog_file, int blog_index){
 		i++;
 
 	}
+	blogs[blog_index].addChar(0, i); //null terminator
 	std::cout << "\tParsing contents end\n";
 	return 1;
 

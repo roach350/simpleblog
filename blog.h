@@ -96,6 +96,19 @@ class blog_post_t{
 		char *getSB(){
 			return sb;
 		}
+
+
+		char *getHTML(){
+			return html;
+		}
+
+		char getChar(int i){
+			return contents[i];
+		}		
+		char *getContents(){
+			return contents;
+		}
+
 };
 
 

@@ -35,6 +35,22 @@ int openFiles(const char *dir){
 }
 
 
+int writeBlogs(){
+	for (int i = 0; i < blog_count; i++){
+        	FILE *blog_file = fopen(blogs[i].getHTML(), "w");
+                if (blog_file == NULL) {
+                        std::cout << "couldn't open " << blogs[i].getHTML() << '\n';
+                        return 0;
+                }
+		write_blog(blog_file, i);		                 
+		fclose(blog_file);
+         }
+         return 1;
+
+
+
+}
+
 
 void writeAll(const char *dir){
 	std::cout << "[COMPILING]\n";
@@ -44,6 +60,10 @@ void writeAll(const char *dir){
 	write_index(index_file);
 	fclose(index_file);
 	std::cout << "\tindex.html written\n";
+	
+	/* blogs */
+	writeBlogs();
+	std::cout << "\tblog HTML written\n";
 
 }
 
