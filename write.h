@@ -8,7 +8,7 @@
 #include "writers.h"
 
 
-FILE *index_file;
+FILE *index_file, *blog_index_file;
 
 
 int openFiles(const char *dir){
@@ -23,6 +23,19 @@ int openFiles(const char *dir){
 		std::cout << "Could not make index.html\n";
 		return 0;
 	}
+	/* blog index*/
+	
+	url = dir;
+	int index = find_page(web_pages, "Blog");
+	url += "/";
+	url += web_pages[index].getHTML();
+	blog_index_file = fopen(url.c_str(), "w");
+	
+	if (blog_index_file == NULL){
+		std::cout << "Could not make " << url << '\n';
+		return 0;
+	}
+
 
 	return 1;
 
@@ -60,6 +73,10 @@ void writeAll(const char *dir){
 	write_index(index_file);
 	fclose(index_file);
 	std::cout << "\tindex.html written\n";
+	/* blog index */
+	write_blog_index(blog_index_file);
+	fclose(blog_index_file);
+	std::cout << "\tblog.html written\n";
 	
 	/* blogs */
 	writeBlogs();

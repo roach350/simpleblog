@@ -1,0 +1,10 @@
+Version 0.0.1
+	-initial alpha release
+
+Version 0.0.2
+	-fixed blog generation bugs
+	-added blog index generator (All Blogs page)
+	-added unordered list support
+	
+
+

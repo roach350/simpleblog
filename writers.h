@@ -11,7 +11,7 @@ void write_header(FILE *fptr){
 	fprintf(fptr, "\t<head>\n");
 	fprintf(fptr, "\t\t<title>%s</title>\n", blog_title);
 	fprintf(fptr, "\t\t<link rel = 'stylesheet' href = '%s'>\n", main_css); 
-	fprintf(fptr, "\t<head>\n");
+	fprintf(fptr, "\t</head>\n");
 }
 
 
@@ -37,7 +37,7 @@ void write_nav(FILE *fptr){
 
 void write_footer(FILE *fptr){
 	fprintf(fptr, "\t\t<footer>\n");
-	fprintf(fptr, "\t\t\t<p>%s</p>", blog_footer);
+	fprintf(fptr, "\t\t\t<p>%s</p>\n", blog_footer);
 	fprintf(fptr, "\t\t<footer>\n");
 
 }
@@ -94,7 +94,7 @@ void write_paragraph(FILE *fptr, char *string){
 
 void write_pic(FILE *fptr, char *pic, char *pic_fs, char *pic_alt){
 
-	fprintf(fptr, "\t\t<a href='%s' ><img src='%s' alt='%s'></a> \n", pic_fs, pic, pic_alt);
+	fprintf(fptr, "\t\t<a href='%s' ><img src='%s' alt='%s' width=\"50%\"></a> \n", pic_fs, pic, pic_alt);
 	fprintf(fptr, "\t\t<p>%s</p>\n", pic_alt);
 	fprintf(fptr, "\t\t<br>\n");
 }
@@ -118,6 +118,7 @@ void write_end_ulist(FILE *fptr){
 
 
 void write_index(FILE *fptr){
+	/* used for testing */
 	write_header(fptr);
 
 	fprintf(fptr, "\t<body>\n");
@@ -139,7 +140,59 @@ void write_index(FILE *fptr){
 	fprintf(fptr, "\t</body>\n");
 
 	fprintf(fptr, "</html>\n");
+
 }
+
+void write_blog_index(FILE *fptr){
+	write_header(fptr);
+
+	fprintf(fptr, "\t<body>\n");
+	fprintf(fptr, "\t\t<header>\n");
+	fprintf(fptr, "\t\t\t<h1>%s</h1>\n", blog_title);	
+	fprintf(fptr, "\t\t\t<i><p>%s</p></i>\n", blog_slogan);	
+	fprintf(fptr, "\t\t</header>\n");
+
+
+	write_nav(fptr);
+
+	
+	fprintf(fptr, "\t\t<h2>All Blogs</h2>\n");
+	write_n_blog_preview(fptr, blog_count);
+
+
+	
+	write_footer(fptr);
+	fprintf(fptr, "\t</body>\n");
+
+	fprintf(fptr, "</html>\n");
+
+
+
+}
+
+
+void write_page(FILE *fptr){
+	/*not complete*/
+
+
+	write_header(fptr);
+
+	fprintf(fptr, "\t<body>\n");
+	fprintf(fptr, "\t\t<header>\n");
+	fprintf(fptr, "\t\t\t<h1>%s</h1>\n", blog_title);	
+	fprintf(fptr, "\t\t\t<i><p>%s</p></i>\n", blog_slogan);	
+	fprintf(fptr, "\t\t</header>\n");
+
+	write_nav(fptr);
+
+	
+	write_footer(fptr);
+	fprintf(fptr, "\t</body>\n");
+
+	fprintf(fptr, "</html>\n");
+	
+}
+
 
 
 
@@ -268,7 +321,7 @@ void write_contents(FILE *fptr, int blog_index){
 				
 			}
 			if (blogs[blog_index].getChar(i) == '-'){
-				
+				/* unordered list */	
 				//list not started
 				char list_str[128];
 				initStr(list_str, 128);
@@ -297,10 +350,23 @@ void write_contents(FILE *fptr, int blog_index){
 
 					
 			}
+		
+
+			if (blogs[blog_index].getChar(i) == '?'){
+				/* print preview */
+				int prev_count = blogs[blog_index].getChar(i + 1) - '0'; //get count as int
+				write_n_blog_preview(fptr, prev_count);
+				i++; 
+
+				
+			}
+			
+
+
 			
 			/* if line does not begin with special character, assume paragraph */
 			char c = blogs[blog_index].getChar(i);
-			if (c != '#' && c != ';' && c != '$' && c != '^' && c != ' ' && c != 0 && c!= '-' && ul == 0){
+			if (c != '#' && c != ';' && c != '$' && c != '^' && c != ' ' && c != 0 && c!= '-' && c!= '?' && ul == 0){
 				int j = 0;
 				while (blogs[blog_index].getChar(i) != '\n' && blogs[blog_index].getChar(i) != 0){
 					paragraph[j] = blogs[blog_index].getChar(i);

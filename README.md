@@ -29,6 +29,7 @@ Here is an example file structure:
 ```
 website_dir/
 	index.html
+	index.sb
 	manifest.sb
 	contents/
 		blog/
