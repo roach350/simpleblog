@@ -31,6 +31,10 @@ void write_nav(FILE *fptr){
 
 }
 
+
+
+
+
 void write_footer(FILE *fptr){
 	fprintf(fptr, "\t\t<footer>\n");
 	fprintf(fptr, "\t\t\t<p>%s</p>", blog_footer);
@@ -41,9 +45,9 @@ void write_footer(FILE *fptr){
 
 void write_blog_preview(FILE *fptr, int blog_index){
 
-
+	
 	fprintf(fptr, "\t\t\t\t<article>\n");
-	fprintf(fptr, "\t\t\t\t\t<a href= ''><h3>%s</h3></a>\n", blogs[blog_index].getTitle());
+	fprintf(fptr, "\t\t\t\t\t<a href= '%s'><h3>%s</h3></a>\n", blogs[blog_index].getHTML(), blogs[blog_index].getTitle());
 	fprintf(fptr, "\t\t\t\t\t<p><b>PUBLISHED </b>%i/%i/%i</p>\n", blogs[blog_index].getM(), blogs[blog_index].getD(), blogs[blog_index].getY());
 	fprintf(fptr, "\t\t\t\t\t<p><b>WRITTEN BY </b>%s</p>\n", blogs[blog_index].getAuthor());
 	fprintf(fptr, "\t\t\t\t\t<p>%s</p>\n", blogs[blog_index].getSummary());
@@ -69,9 +73,10 @@ void write_n_blog_preview(FILE *fptr, int n){
 
 
 void write_heading(FILE *fptr, char *string, int heading){
-
-	fprintf(fptr, "\t\t<h1>%s</h1>\n", string);
+	//std::cout << heading << '\n';
+	fprintf(fptr, "\t\t<h%d>%s</h%d>\n", heading, string, heading);
 	
+	//fprintf(fptr, "\t\t<h1>%s</h1>\n", string);
 
 
 }
@@ -92,6 +97,23 @@ void write_pic(FILE *fptr, char *pic, char *pic_fs, char *pic_alt){
 	fprintf(fptr, "\t\t<a href='%s' ><img src='%s' alt='%s'></a> \n", pic_fs, pic, pic_alt);
 	fprintf(fptr, "\t\t<p>%s</p>\n", pic_alt);
 	fprintf(fptr, "\t\t<br>\n");
+}
+
+
+void write_start_ulist(FILE *fptr){
+
+	fprintf(fptr, "\t\t<ul>\n");
+
+}
+void write_append_ulist(FILE *fptr, char *string){
+
+	fprintf(fptr, "\t\t\t<li>%s</li>\n", string);
+}
+
+void write_end_ulist(FILE *fptr){
+
+	fprintf(fptr, "\t\t</ul>\n");
+
 }
 
 
@@ -118,6 +140,7 @@ void write_index(FILE *fptr){
 
 	fprintf(fptr, "</html>\n");
 }
+
 
 
 void write_blog(FILE *fptr, int blog_index){
@@ -158,10 +181,12 @@ void write_contents(FILE *fptr, int blog_index){
 	char paragraph[1024];
 	initStr(paragraph, 1024);
 	int end = 0; //used for checking if at end of content
+	int ul = 0; //unordered list status
+	
 	/* parse and write contents of blog entry */
 
 	while (i < BLOG_CONTENT_SIZE && end != 1){
-		while (i != '\n'){
+		while (blogs[blog_index].getChar(i) != '\n'){
 			//should use switch
 			/* begin parsing line */
 			if (blogs[blog_index].getChar(i) == '#'){
@@ -242,9 +267,40 @@ void write_contents(FILE *fptr, int blog_index){
 				write_pic(fptr, pic, pic_fs, pic_alt);
 				
 			}
+			if (blogs[blog_index].getChar(i) == '-'){
+				
+				//list not started
+				char list_str[128];
+				initStr(list_str, 128);
+				int j = 0;
+				i++; //advance
+				while (blogs[blog_index].getChar(i) != '\n'){
+					list_str[j] = blogs[blog_index].getChar(i);
+					i++;
+					j++;
+				}
+				list_str[j] = 0; //null terminator
+				if (ul == 0){
+					write_start_ulist(fptr);
+					ul = 1;
+				}
+				if (ul == 1){
+					//list already started
+					write_append_ulist(fptr, list_str);
+					if (blogs[blog_index].getChar(i + 1) != '-'){
+						//end of list
+						write_end_ulist(fptr);
+						ul = 0;
+					}
+				}
+
+
+					
+			}
 			
 			/* if line does not begin with special character, assume paragraph */
-			if (blogs[blog_index].getChar(i) != '#' && blogs[blog_index].getChar(i) != ';' && blogs[blog_index].getChar(i) != '^' && blogs[blog_index].getChar(i) != '$' && blogs[blog_index].getChar(i) != ' ' && blogs[blog_index].getChar(i) != 0) {
+			char c = blogs[blog_index].getChar(i);
+			if (c != '#' && c != ';' && c != '$' && c != '^' && c != ' ' && c != 0 && c!= '-' && ul == 0){
 				int j = 0;
 				while (blogs[blog_index].getChar(i) != '\n' && blogs[blog_index].getChar(i) != 0){
 					paragraph[j] = blogs[blog_index].getChar(i);
@@ -270,7 +326,7 @@ void write_contents(FILE *fptr, int blog_index){
 		// new line
 
 
-
+		i++;
 	}
 
 

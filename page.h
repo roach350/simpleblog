@@ -7,7 +7,7 @@ class page_t{
 	private:
 		char title[64];
 		char url[64];
-		char html[64];
+		char html[64]; //
 		char css[64]; //css address
 		char js[64]; //js address
 		char sb[64]; // markup file location
