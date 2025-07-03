@@ -75,6 +75,7 @@ int main(int argc, char *argv[]){
 		
 		findBlogs(verb1);
 		parseBlogs();
+		//sortBlogs(blogs, blog_count);
 		writeAll(verb1);
 
 

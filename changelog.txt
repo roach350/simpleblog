@@ -2,9 +2,17 @@ Version 0.0.1
 	-initial alpha release
 
 Version 0.0.2
-	-fixed blog generation bugs
-	-added blog index generator (All Blogs page)
-	-added unordered list support
-	
+	- fixed blog generation bugs
+	- added blog index generator (All Blogs page)
+	- added unordered list support
+	- blog entry sorting based on folder name
+	- twitter card support	
 
+
+
+TODO
+	- Full linking
+		
+Future
+	- Open Graph Support
 

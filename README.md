@@ -16,9 +16,9 @@ It is up to you for how you want host it.
 SimpleBlog is a work in progress at the moment, this is a list of core functionality that needs to be implemented before it is useable:
 - top x newest blog html generator
 - code formatting
-- link embedding
+- easy link embedding
 - proper linking
-- auto index generation based on headings
+- auto table of contents generation based on headings
 
 ### Future Features
 - RSS
@@ -79,6 +79,8 @@ Between the '`' characters is the main content of the entry. Here are some synta
 - '#' declares a header, similar to markdown
 - '$' declares an image, links to images in the same directory, e.g. "$picture_preview.jpg,full_size_hyperlinked_img.jpg,alt_text;"
 - '^' declares a code snipped, not implemented yet
+- '?' declares a top three newest blog entries section
+- '-' declares an unordered list element
 ```
 simpleblog init <dir>
 simpleblog compile <dir>

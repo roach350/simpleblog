@@ -10,7 +10,10 @@ void write_header(FILE *fptr){
 	fprintf(fptr, "<!DOCTYPE html>\n");
 	fprintf(fptr, "\t<head>\n");
 	fprintf(fptr, "\t\t<title>%s</title>\n", blog_title);
-	fprintf(fptr, "\t\t<link rel = 'stylesheet' href = '%s'>\n", main_css); 
+	fprintf(fptr, "\t\t<link rel = 'stylesheet' href = '%s'>\n", main_css);
+	fprintf(fptr, "\t\t<meta name=\"twitter:card\" content=\"summary\"></meta>\n");
+	fprintf(fptr, "\t\t<meta name=\"twitter:title\" content=\"%s\"></meta>\n", blog_title);
+	fprintf(fptr, "\t\t<meta name=\"twitter:description\" content=\"%s\"></meta>\n", blog_slogan);
 	fprintf(fptr, "\t</head>\n");
 }
 
@@ -64,7 +67,7 @@ void write_n_blog_preview(FILE *fptr, int n){
 	fprintf(fptr, "\t\t\t<main>\n");
 	for (int i = 0; i < n; i++){
 
-		write_blog_preview(fptr, i);
+		write_blog_preview(fptr, blog_count - 1 - i);
 	}
 
 	fprintf(fptr, "\t\t\t</main>\n");

@@ -27,6 +27,11 @@ class blog_post_t{
 
 			delete contents;
 		}
+		//deep copy constrcutor
+		blog_post_t(const blog_post_t &to_copy){
+			contents = new char[BLOG_CONTENT_SIZE];
+			strncpy(contents, to_copy.contents, BLOG_CONTENT_SIZE);
+		}
 	
 		/* the setters */
 		void setTitle(const char *t){

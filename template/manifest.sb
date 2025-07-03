@@ -1,5 +1,6 @@
 [pages]
-blog;
+home;
+Blog;
 downloads;
 about;
 
@@ -11,14 +12,16 @@ slogan=Insert Slogan Here;
 footer=Made with SimpleBlog;
 
 //per page includes
-[blog]
+[Blog]
 html=web/pages/blog.html;
 sb=contents/extra/blog.sb;
 
 [about]
 html=web/pages/about.html;
 sb=contents/extra/about.sb;
-
+[home]
+html=index.html;
+sb=;
 
 [downloads]
 html=web/pages/downloads.html;

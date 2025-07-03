@@ -3,13 +3,13 @@
 
 */
 #include <dirent.h>
+#include<bits/stdc++.h>
 
 #include "blog.h"
 
 //setup blogs
 
 blog_post_t blogs[BLOG_MAX_POSTS];
-
 int blog_count = 0;
 
 
@@ -20,7 +20,7 @@ int parseContents(FILE *blog_file, int blog_index);
 int findBlogs(const char *dir){
 	std::cout << "[PARSING BLOGS]\n";
 	/* setup */
-	struct dirent *de;
+	struct dirent **de;
 	DIR *blog_dir;
 	int i = 0; //index
 
@@ -35,13 +35,16 @@ int findBlogs(const char *dir){
 	}
 
 	/* index blogs */
-	while ((de = readdir(blog_dir)) != NULL){
-		if (de->d_name[0] != '.'){ //skip . , .. , and hidden files
+	//while ((de = readdir(blog_dir)) != NULL){
+	int num = scandir(blog_dir_str.c_str(), &de, NULL, alphasort);
+
+	for (int n = 0; n < num; n++){
+		if (de[n]->d_name[0] != '.'){ //skip . , .. , and hidden files
 			
-			std::cout << "\tFound " <<  de->d_name << '\n';
+			std::cout << "\tFound " <<  de[n]->d_name << '\n';
 			std::string index_dir = blog_dir_str;
 			index_dir += "/";
-			index_dir += de->d_name;
+			index_dir += de[n]->d_name;
 			std::string html = index_dir;
 			html += "/index.html";
 			index_dir += "/index.sb";
@@ -54,7 +57,9 @@ int findBlogs(const char *dir){
 			blog_count++;
 			i++;
 		}
+		free(de[n]);
 	}
+	free(de);
 	return 1;
 
 }
@@ -215,14 +220,31 @@ int parseBlog(FILE *blog_file, int blog_index){
 
 
 
+}
+
+
+//sorting code is broken
+
+bool compareDates(blog_post_t &d1, blog_post_t &d2){
+    // All cases when true should be returned
+	if (d1.getY() < d2.getY()){
+        	return true;
+	}
+    	if (d1.getY() == d2.getY() && d1.getM() < d2.getM()){
+        	return true;
+	}
+    	if (d1.getY() == d2.getY() && d1.getM() == d2.getM() && d1.getD() < d2.getD()){
+        	return true;
+	}
+    // If none of the above cases satisfy, return false
+    	return false;
 
 
 
+} 
 
 
-
-
-
-
-
+int sortBlogs(blog_post_t arr[], int n){
+	//use built in sorting function
+	std::sort(arr, arr + n, compareDates);
 }

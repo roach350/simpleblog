@@ -1,0 +1,23 @@
+title=Blog Post;
+author=Some Bloke;
+month=06;
+day=16;
+year=2025;
+summary=This is an example blog;
+
+
+`
+#Here is heading
+
+Parapgraph text can be written like this.
+Here is a new line. (Determined by \n)
+
+
+
+^
+Code would be formated like this
+^
+text here
+
+
+`
