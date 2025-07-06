@@ -232,7 +232,7 @@ void write_contents(FILE *fptr, int blog_index){
 	/*temp vars */
 	int heading = 0; char heading_str[128];
 	int code_start = 0; int code_end = 0;
-	char pic[64]; char pic_fs[64]; char pic_alt[64];
+	char pic[64]; char pic_fs[64]; char pic_alt[256];
 	initStr(pic, 64); initStr(pic_fs, 64);
 	char paragraph[1024];
 	initStr(paragraph, 1024);
@@ -291,7 +291,7 @@ void write_contents(FILE *fptr, int blog_index){
 				*/
 				int j = 0;
 				i++; //advance
-				initStr(pic, 64); initStr(pic_fs, 64); initStr(pic_alt, 64);
+				initStr(pic, 64); initStr(pic_fs, 64); initStr(pic_alt, 256);
 				// pic
 				while (blogs[blog_index].getChar(i) != ','){
 					pic[j] = blogs[blog_index].getChar(i);
