@@ -5,11 +5,16 @@
 */
 void write_contents(FILE *fptr, int blog_index);
 
-void write_header(FILE *fptr){
+void write_header(FILE *fptr, int blog_index){
 	fprintf(fptr, "<html>\n");
 	fprintf(fptr, "<!DOCTYPE html>\n");
 	fprintf(fptr, "\t<head>\n");
-	fprintf(fptr, "\t\t<title>%s</title>\n", blog_title);
+	if (blog_index >= 0){
+		fprintf(fptr, "\t\t<title>%s</title>\n", blogs[blog_index].getTitle());
+	}else{
+
+		fprintf(fptr, "\t\t<title>%s</title>\n", blog_title);
+	}
 	fprintf(fptr, "\t\t<link rel = 'stylesheet' href = '%s'>\n", main_css);
 	fprintf(fptr, "\t\t<meta name=\"twitter:card\" content=\"summary\"></meta>\n");
 	fprintf(fptr, "\t\t<meta name=\"twitter:title\" content=\"%s\"></meta>\n", blog_title);
@@ -122,7 +127,7 @@ void write_end_ulist(FILE *fptr){
 
 void write_index(FILE *fptr){
 	/* used for testing */
-	write_header(fptr);
+	write_header(fptr, -1);
 
 	fprintf(fptr, "\t<body>\n");
 	fprintf(fptr, "\t\t<header>\n");
@@ -147,7 +152,7 @@ void write_index(FILE *fptr){
 }
 
 void write_blog_index(FILE *fptr){
-	write_header(fptr);
+	write_header(fptr, -1);
 
 	fprintf(fptr, "\t<body>\n");
 	fprintf(fptr, "\t\t<header>\n");
@@ -178,7 +183,7 @@ void write_page(FILE *fptr){
 	/*not complete*/
 
 
-	write_header(fptr);
+	write_header(fptr, -1);
 
 	fprintf(fptr, "\t<body>\n");
 	fprintf(fptr, "\t\t<header>\n");
@@ -200,7 +205,7 @@ void write_page(FILE *fptr){
 
 
 void write_blog(FILE *fptr, int blog_index){
-	write_header(fptr);
+	write_header(fptr, blog_index);
 
 	fprintf(fptr, "\t<body>\n");
 	fprintf(fptr, "\t\t<header>\n");

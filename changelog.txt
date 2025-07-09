@@ -12,7 +12,7 @@ Version 0.0.3
 	- increased pic_alt buffer size from 64 characters to 256, img alts can now be much longer
 	- default width for images is now 25% instead of 50%
 	- header for all entries is now called "All Blog Entries"
-
+	- can set blog entry title as <title>
 TODO
 	- Full linking
 		
