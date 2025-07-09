@@ -97,7 +97,7 @@ void write_paragraph(FILE *fptr, char *string){
 
 void write_pic(FILE *fptr, char *pic, char *pic_fs, char *pic_alt){
 
-	fprintf(fptr, "\t\t<a href='%s' ><img src='%s' alt='%s' width=\"50%\"></a> \n", pic_fs, pic, pic_alt);
+	fprintf(fptr, "\t\t<a href='%s' ><img src='%s' alt='%s' width=\"25%\"></a> \n", pic_fs, pic, pic_alt);
 	fprintf(fptr, "\t\t<p>%s</p>\n", pic_alt);
 	fprintf(fptr, "\t\t<br>\n");
 }
@@ -159,7 +159,7 @@ void write_blog_index(FILE *fptr){
 	write_nav(fptr);
 
 	
-	fprintf(fptr, "\t\t<h2>All Blogs</h2>\n");
+	fprintf(fptr, "\t\t<h2>All Blog Entries</h2>\n");
 	write_n_blog_preview(fptr, blog_count);
 
 

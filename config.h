@@ -1,4 +1,4 @@
-#define VERSION_STRING "0.0.2"
+#define VERSION_STRING "0.0.3"
 
 
 /* files */
