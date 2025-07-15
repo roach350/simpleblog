@@ -8,6 +8,7 @@ about;
 [lib]
 css=web/lib/main.css;
 title=SimpleBlog;
+domain=www.simple.blog;
 slogan=Insert Slogan Here;
 footer=Made with SimpleBlog;
 
@@ -15,15 +16,20 @@ footer=Made with SimpleBlog;
 [Blog]
 html=web/pages/blog.html;
 sb=contents/extra/blog.sb;
+filename=blog.html;
 
 [about]
 html=web/pages/about.html;
 sb=contents/extra/about.sb;
+filename=about.html;
+
 [home]
 html=index.html;
+filename=../../index.html;
 sb=;
+
 
 [downloads]
 html=web/pages/downloads.html;
 sb=contents/extra/downloads.sb;
-
+filename=downloads.html;

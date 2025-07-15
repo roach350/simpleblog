@@ -14,7 +14,7 @@ char main_css[64]; //main css for all websites
 char blog_footer[256];
 char blog_title[128];
 char blog_slogan[128];
-
+char blog_domain[64];
 
 /* files */
 FILE *manifest_file;
@@ -88,7 +88,7 @@ int parseLib(){
 	std::cout << "[lib section found]\n";
 	char c = 0;
 	char token[32];
-	char value[64];
+	char value[256];
 	int equal_set = 0; //used for including spaces
 	while(!(feof(manifest_file))){
 
@@ -152,7 +152,9 @@ int parseLib(){
 		if (strcmp(token, "footer") == 0){
 			strncpy(blog_footer, value, 256); 
 		}
-
+		if (strcmp(token, "domain") == 0){
+			strncpy(blog_domain, value, 64); 
+		}
 
 		//reset and parse next line
 		initStr(token, 32);
@@ -225,6 +227,12 @@ int parsePageSection(char *section){
 
 
 		}
+		if (strcmp(token, "filename") == 0){
+			page_index = find_page(web_pages, section);
+			web_pages[page_index].setFName(value);
+
+		}
+
 
 		//reset and parse next line
 		initStr(token, 32);

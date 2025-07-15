@@ -13,9 +13,10 @@ Version 0.0.3
 	- default width for images is now 25% instead of 50%
 	- header for all entries is now called "All Blog Entries"
 	- can set blog entry title as <title>
+	- domain support
 TODO
 	- Full linking
-		
+	- Sitemap generation	
 Future
 	- auto table of contents generation
 	- tags

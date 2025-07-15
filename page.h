@@ -6,6 +6,7 @@
 class page_t{
 	private:
 		char title[64];
+		char fname[64];
 		char url[64];
 		char html[64]; //
 		char css[64]; //css address
@@ -32,7 +33,12 @@ class page_t{
 		char *getHTML(){
 			return html;
 		}
+		
+		char *getFName(){
+			return fname;
 
+		}
+	
 		void setTitle(const char *t){
 			strncpy(title, t, 64);
 		}
@@ -42,7 +48,11 @@ class page_t{
 			
 
 		}
+		void setFName(const char *f){
+			strncpy(fname, f, 64);
 
+
+		}
 		void setURL(const char *u){
 			/* set location relative to executable path */
 

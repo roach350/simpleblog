@@ -5,7 +5,7 @@
 */
 void write_contents(FILE *fptr, int blog_index);
 
-void write_header(FILE *fptr, int blog_index){
+void write_header(FILE *fptr, int blog_index, int lib){
 	fprintf(fptr, "<html>\n");
 	fprintf(fptr, "<!DOCTYPE html>\n");
 	fprintf(fptr, "\t<head>\n");
@@ -15,7 +15,26 @@ void write_header(FILE *fptr, int blog_index){
 
 		fprintf(fptr, "\t\t<title>%s</title>\n", blog_title);
 	}
-	fprintf(fptr, "\t\t<link rel = 'stylesheet' href = '%s'>\n", main_css);
+	
+	std::string lib_str_css = "";	
+	
+	for (int i = 0; i < lib; i++){
+		
+		if (lib == 0){			
+			break;
+		}
+		if (lib > 0){
+			
+		lib_str_css += "../";
+		
+		}
+
+
+	}
+	lib_str_css += main_css;
+
+	fprintf(fptr, "\t\t<link rel = 'stylesheet' href = '%s'>\n", lib_str_css.c_str());
+
 	fprintf(fptr, "\t\t<meta name=\"twitter:card\" content=\"summary\"></meta>\n");
 	fprintf(fptr, "\t\t<meta name=\"twitter:title\" content=\"%s\"></meta>\n", blog_title);
 	fprintf(fptr, "\t\t<meta name=\"twitter:description\" content=\"%s\"></meta>\n", blog_slogan);
@@ -24,6 +43,23 @@ void write_header(FILE *fptr, int blog_index){
 
 
 void write_nav(FILE *fptr){
+
+
+	fprintf(fptr, "\t\t<hr>\n");
+	fprintf(fptr, "\t\t\t<nav>\n");
+	for (int i = 0; i < page_count; i++){
+		fprintf(fptr, "\t\t\t\t<a href='%s'>%s</a>\n", web_pages[i].getFName(), web_pages[i].getTitle());
+	}
+
+
+	fprintf(fptr, "\t\t</nav>\n");
+	fprintf(fptr, "\t\t<hr>\n");
+
+
+}
+
+
+void write_nav_index(FILE *fptr){
 
 
 	fprintf(fptr, "\t\t<hr>\n");
@@ -51,11 +87,14 @@ void write_footer(FILE *fptr){
 }
 
 
-void write_blog_preview(FILE *fptr, int blog_index){
-
-	
+void write_blog_preview(FILE *fptr, int blog_index, int dir){
+	std::string html = "";
+	for (int i = 0; i < dir; i++){
+		html += "../";
+	}
+	html += blogs[blog_index].getHTML();	
 	fprintf(fptr, "\t\t\t\t<article>\n");
-	fprintf(fptr, "\t\t\t\t\t<a href= '%s'><h3>%s</h3></a>\n", blogs[blog_index].getHTML(), blogs[blog_index].getTitle());
+	fprintf(fptr, "\t\t\t\t\t<a href= '%s'><h3>%s</h3></a>\n", html.c_str(), blogs[blog_index].getTitle());
 	fprintf(fptr, "\t\t\t\t\t<p><b>PUBLISHED </b>%i/%i/%i</p>\n", blogs[blog_index].getM(), blogs[blog_index].getD(), blogs[blog_index].getY());
 	fprintf(fptr, "\t\t\t\t\t<p><b>WRITTEN BY </b>%s</p>\n", blogs[blog_index].getAuthor());
 	fprintf(fptr, "\t\t\t\t\t<p>%s</p>\n", blogs[blog_index].getSummary());
@@ -66,13 +105,13 @@ void write_blog_preview(FILE *fptr, int blog_index){
 
 
 
-void write_n_blog_preview(FILE *fptr, int n){
+void write_n_blog_preview(FILE *fptr, int n, int dir){
 
 	
 	fprintf(fptr, "\t\t\t<main>\n");
 	for (int i = 0; i < n; i++){
 
-		write_blog_preview(fptr, blog_count - 1 - i);
+		write_blog_preview(fptr, blog_count - 1 - i, dir);
 	}
 
 	fprintf(fptr, "\t\t\t</main>\n");
@@ -127,7 +166,7 @@ void write_end_ulist(FILE *fptr){
 
 void write_index(FILE *fptr){
 	/* used for testing */
-	write_header(fptr, -1);
+	write_header(fptr, -1, 0);
 
 	fprintf(fptr, "\t<body>\n");
 	fprintf(fptr, "\t\t<header>\n");
@@ -136,11 +175,11 @@ void write_index(FILE *fptr){
 	fprintf(fptr, "\t\t</header>\n");
 
 
-	write_nav(fptr);
+	write_nav_index(fptr);
 
 	
 	fprintf(fptr, "\t\t<h2>Latest News</h2>\n");
-	write_n_blog_preview(fptr, 3);
+	write_n_blog_preview(fptr, 3, 1);
 
 
 	
@@ -152,7 +191,7 @@ void write_index(FILE *fptr){
 }
 
 void write_blog_index(FILE *fptr){
-	write_header(fptr, -1);
+	write_header(fptr, -1, 2);
 
 	fprintf(fptr, "\t<body>\n");
 	fprintf(fptr, "\t\t<header>\n");
@@ -165,7 +204,7 @@ void write_blog_index(FILE *fptr){
 
 	
 	fprintf(fptr, "\t\t<h2>All Blog Entries</h2>\n");
-	write_n_blog_preview(fptr, blog_count);
+	write_n_blog_preview(fptr, blog_count, 3);
 
 
 	
@@ -183,7 +222,7 @@ void write_page(FILE *fptr){
 	/*not complete*/
 
 
-	write_header(fptr, -1);
+	write_header(fptr, -1, 0);
 
 	fprintf(fptr, "\t<body>\n");
 	fprintf(fptr, "\t\t<header>\n");
@@ -205,7 +244,7 @@ void write_page(FILE *fptr){
 
 
 void write_blog(FILE *fptr, int blog_index){
-	write_header(fptr, blog_index);
+	write_header(fptr, blog_index, 3);
 
 	fprintf(fptr, "\t<body>\n");
 	fprintf(fptr, "\t\t<header>\n");
@@ -363,7 +402,7 @@ void write_contents(FILE *fptr, int blog_index){
 			if (blogs[blog_index].getChar(i) == '?'){
 				/* print preview */
 				int prev_count = blogs[blog_index].getChar(i + 1) - '0'; //get count as int
-				write_n_blog_preview(fptr, prev_count);
+				write_n_blog_preview(fptr, prev_count, 4);
 				i++; 
 
 				
