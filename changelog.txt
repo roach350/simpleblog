@@ -15,8 +15,19 @@ Version 0.0.3
 	- can set blog entry title as <title>
 	- domain support
 	- full linking
+Version 0.1.0
+	- first beta release
+	- should hae all TODO feartures
+
+
+FUTURE
+	Version 1.0.0
+		- tags and per-tag page generation
+		- auto table of conentents generation
+		- proper documentation	
 TODO
 	- Sitemap generation	
+	- Code snippet support
 Future
 	- auto table of contents generation
 	- tags

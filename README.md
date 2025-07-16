@@ -14,12 +14,9 @@ It is up to you for how you want host it.
 
 ### TODO
 SimpleBlog is a work in progress at the moment, this is a list of core functionality that needs to be implemented before it is useable:
-- top x newest blog html generator
 - code formatting
-- easy link embedding
-- proper linking
 - auto table of contents generation based on headings
-
+- sitemap generation
 ### Future Features
 - RSS
 - tagging
