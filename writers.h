@@ -43,8 +43,9 @@ void write_header(FILE *fptr, int blog_index, int lib){
 
 
 void write_nav(FILE *fptr){
-
-
+	
+	
+	
 	fprintf(fptr, "\t\t<hr>\n");
 	fprintf(fptr, "\t\t\t<nav>\n");
 	for (int i = 0; i < page_count; i++){
@@ -59,13 +60,24 @@ void write_nav(FILE *fptr){
 }
 
 
-void write_nav_index(FILE *fptr){
+void write_nav_index(FILE *fptr, int dir){
+	std::string offset = "";
+	for (int i = 0; i < dir; i++){
+		offset += "../";
+
+	}
+
 
 
 	fprintf(fptr, "\t\t<hr>\n");
 	fprintf(fptr, "\t\t\t<nav>\n");
 	for (int i = 0; i < page_count; i++){
-		fprintf(fptr, "\t\t\t\t<a href='%s'>%s</a>\n", web_pages[i].getHTML(), web_pages[i].getTitle());
+	
+		std::string temp_offset = "";
+
+		temp_offset += offset;
+		temp_offset += web_pages[i].getHTML();
+		fprintf(fptr, "\t\t\t\t<a href='%s'>%s</a>\n", temp_offset.c_str(), web_pages[i].getTitle());
 	}
 
 
@@ -175,7 +187,7 @@ void write_index(FILE *fptr){
 	fprintf(fptr, "\t\t</header>\n");
 
 
-	write_nav_index(fptr);
+	write_nav_index(fptr, 0);
 
 	
 	fprintf(fptr, "\t\t<h2>Latest News</h2>\n");
@@ -255,7 +267,7 @@ void write_blog(FILE *fptr, int blog_index){
 
 
 
-	write_nav(fptr);
+	write_nav_index(fptr, 3);
 	fprintf(fptr, "\t\t<h2>%s</h2>\n", blogs[blog_index].getTitle());	
 	fprintf(fptr, "\t\t<p><b>PUBLISHED </b>%i/%i/%i</p>\n", blogs[blog_index].getM(), blogs[blog_index].getD(), blogs[blog_index].getY());
 	fprintf(fptr, "\t\t<p><b>WRITTEN BY </b>%s</p>\n", blogs[blog_index].getAuthor());

@@ -14,8 +14,8 @@ Version 0.0.3
 	- header for all entries is now called "All Blog Entries"
 	- can set blog entry title as <title>
 	- domain support
+	- full linking
 TODO
-	- Full linking
 	- Sitemap generation	
 Future
 	- auto table of contents generation
