@@ -1,88 +1,49 @@
+#ifndef WRITE_H
+#define WRITE_H
+
+
 /* 
 	simpleblog
 	writes html files
 */
 
 
-#include "parse.h"
-#include "writers.h"
+#include "blog.h"
+#include "page.h"
+//#include "parse.h"
 
 
-FILE *index_file, *blog_index_file;
 
 
-int openFiles(const char *dir){
+/* high level writer functions (old writ.h) */
+void writeAll(blog_t* blog, const char *dir);
+int writeBlogs(blog_t* blog);
+int openFiles(blog_t* blog, const char *dir);
 
-	std::string url = dir;
-	url += "/";
-	url += INDEX_FILE_NAME;
-
-	index_file = fopen(url.c_str(), "w");
-
-	if (index_file == NULL){
-		std::cout << "Could not make index.html\n";
-		return 0;
-	}
-	/* blog index*/
-	
-	url = dir;
-	int index = find_page(web_pages, "Blog");
-	url += "/";
-	url += web_pages[index].getHTML();
-	blog_index_file = fopen(url.c_str(), "w");
-	
-	if (blog_index_file == NULL){
-		std::cout << "Could not make " << url << '\n';
-		return 0;
-	}
-
-
-	return 1;
+/*specific write functions (writers.h)*/
 
 
 
 
 
 
+void write_header(FILE *fptr, blog_t* blog, int blog_index, int lib);
+void write_nav(FILE *fptr, blog_t* blog);
+void write_nav_index(FILE *fptr, blog_t* blog, int dir);
+void write_footer(FILE *fptr, blog_t* blog);
+void write_blog_preview(FILE *fptr, blog_t* blog, int blog_index, int dir);
+void write_n_blog_preview(FILE *fptr, blog_t* blog, int n, int dir);
+void write_heading(FILE *fptr, char *string, int heading);
+void write_code_sec(FILE *fptr, int blog_index, int start, int end);
+void write_paragraph(FILE *fptr, char *string);
+void write_pic(FILE *fptr, char *pic, char *pic_fs, char *pic_alt);
+void write_start_ulist(FILE *fptr);
+void write_append_ulist(FILE *fptr, char *string);
+void write_end_ulist(FILE *fptr);
+void write_index(FILE *fptr, blog_t* blog);
+void write_blog_index(FILE *fptr, blog_t* blog);
+void write_page(FILE *fptr, blog_t* blog);
+void write_blog(FILE *fptr, blog_t* blog, int blog_index);
+void write_contents(FILE *fptr, blog_t* blog, int blog_index);
 
-}
-
-
-int writeBlogs(){
-	for (int i = 0; i < blog_count; i++){
-        	FILE *blog_file = fopen(blogs[i].getHTML(), "w");
-                if (blog_file == NULL) {
-                        std::cout << "couldn't open " << blogs[i].getHTML() << '\n';
-                        return 0;
-                }
-		write_blog(blog_file, i);		                 
-		fclose(blog_file);
-         }
-         return 1;
-
-
-
-}
-
-
-void writeAll(const char *dir){
-	std::cout << "[COMPILING]\n";
-	openFiles(dir);
-
-	/* index.html */
-	write_index(index_file);
-	fclose(index_file);
-	std::cout << "\tindex.html written\n";
-	/* blog index */
-	write_blog_index(blog_index_file);
-	fclose(blog_index_file);
-	std::cout << "\tblog.html written\n";
-	
-	/* blogs */
-	writeBlogs();
-	std::cout << "\tblog HTML written\n";
-
-}
-
-
-
+#endif

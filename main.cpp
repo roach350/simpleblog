@@ -11,7 +11,7 @@
 
 #include "lib.h"
 #include "config.h"
-//#include "parse.h"
+#include "parse.h"
 #include "folder.h"
 #include "blog_parser.h"
 
@@ -35,6 +35,17 @@ void printHelp(){
 
 
 int main(int argc, char *argv[]){
+
+	//create a blog_t 
+
+	blog_t main_blog;
+	//allocate memory and initlizaize
+
+	main_blog.web_pages = new page_t[PAGES_MAX];
+	main_blog.blogs = new blog_post_t[BLOG_MAX_POSTS];	
+	main_blog.page_count = 0;
+	main_blog.blog_count = 0;
+
 	
 	char *mode, *verb1, *verb2;
 	/* parse arguments */
@@ -70,14 +81,13 @@ int main(int argc, char *argv[]){
 	}
 	
 	if (strcmp(mode, "compile") == 0){
-		loadFiles(verb1);
-		parseManifest();
+		loadFiles(verb1, main_blog.manifest_file);
+		parseManifest(main_blog.manifest_file, main_blog.page_count, main_blog.web_pages, main_blog.main_css, main_blog.blog_footer, main_blog.blog_title, main_blog.blog_slogan, main_blog.blog_domain);
 		
-		findBlogs(verb1);
-		parseBlogs();
+		findBlogs(verb1, main_blog.blogs, main_blog.blog_count);
+		parseBlogs(main_blog.blogs, main_blog.blog_count);
 		//sortBlogs(blogs, blog_count);
-		writeAll(verb1);
-
+		writeAll(&main_blog, verb1);
 
 
 
@@ -85,10 +95,12 @@ int main(int argc, char *argv[]){
 	}	
 	
 	if (strcmp(mode, "parse") == 0){
-		loadFiles(verb1);
-		parseManifest();
-		findBlogs(verb1);
-		parseBlogs();
+		loadFiles(verb1, main_blog.manifest_file);
+		parseManifest(main_blog.manifest_file, main_blog.page_count, main_blog.web_pages, main_blog.main_css, main_blog.blog_footer, main_blog.blog_title, main_blog.blog_slogan, main_blog.blog_domain);
+		
+		findBlogs(verb1, main_blog.blogs, main_blog.blog_count);
+		parseBlogs(main_blog.blogs, main_blog.blog_count);
+
 	}	
 	
 	return 0;
