@@ -16,6 +16,8 @@ Version 0.0.3
 	- domain support
 	- full linking
 Version 0.1.0
+	- restructure of codebase (split funcion/class declerations and their implementations)
+	- introduced blog_t for more generalization and improved codebase maintainability
 	- first beta release
 	- should hae all TODO feartures
 
