@@ -10,7 +10,7 @@
 #include "lib.h"
 
 
-int findBlogs(const char *dir, blog_post_t *blogs, int &blog_count){
+int findBlogs(const char *dir, blog_t *blog){
 	std::cout << "[PARSING BLOGS]\n";
 	/* setup */
 	struct dirent **de;
@@ -43,11 +43,11 @@ int findBlogs(const char *dir, blog_post_t *blogs, int &blog_count){
 			index_dir += "/index.sb";
 			
 			//set class data
-			blogs[i].setSB(index_dir.c_str());
-			blogs[i].setHTML(html.c_str());	
+			blog->blogs[i].setSB(index_dir.c_str());
+			blog->blogs[i].setHTML(html.c_str());	
 
 			//std::cout << "set html " << blogs[i].getHTML() << '\n';	
-			blog_count++;
+			blog->blog_count++;
 			i++;
 		}
 		free(de[n]);
@@ -58,17 +58,17 @@ int findBlogs(const char *dir, blog_post_t *blogs, int &blog_count){
 }
 
 
-int parseBlogs(blog_post_t *blogs, int blog_count){
+int parseBlogs(blog_t *blog){
 
 
 
-	for (int i = 0; i < blog_count; i++){
-		FILE *blog_file = fopen(blogs[i].getSB(), "r");
+	for (int i = 0; i < blog->blog_count; i++){
+		FILE *blog_file = fopen(blog->blogs[i].getSB(), "r");
 		if (blog_file == NULL) {
-			std::cout << "couldn't open " << blogs[i].getSB() << '\n';
+			std::cout << "couldn't open " << blog->blogs[i].getSB() << '\n';
 			return 0;
 		}
-		parseBlog(blog_file, i, blogs);
+		parseBlog(blog_file, blog, i);
 		fclose(blog_file);
 	}
 
@@ -81,18 +81,18 @@ int parseBlogs(blog_post_t *blogs, int blog_count){
 
 
 
-int parseContents(FILE *blog_file, int blog_index, blog_post_t *blogs){
+int parseContents(FILE *blog_file, blog_t *blog, int blog_index){
 	char c = 0;
 	int i = 0;
 	std::cout << "\tParsing contents begin\n";
 	
 	while((c = fgetc(blog_file)) != '`'){
 		
-		blogs[blog_index].addChar(c, i);
+		blog->blogs[blog_index].addChar(c, i);
 		i++;
 
 	}
-	blogs[blog_index].addChar(0, i); //null terminator
+	blog->blogs[blog_index].addChar(0, i); //null terminator
 	std::cout << "\tParsing contents end\n";
 	return 1;
 
@@ -101,7 +101,7 @@ int parseContents(FILE *blog_file, int blog_index, blog_post_t *blogs){
 
 
 
-int parseBlog(FILE *blog_file, int blog_index, blog_post_t *blogs){
+int parseBlog(FILE *blog_file, blog_t *blog, int blog_index){
 	std::cout << "\t[Parsing Blog Entry " << blog_index << "]\n";
 
 	char c = 0;
@@ -128,7 +128,7 @@ int parseBlog(FILE *blog_file, int blog_index, blog_post_t *blogs){
 
 			if (c == '`'){
 				/* time to parse contents */
-				parseContents(blog_file, blog_index, blogs);
+				parseContents(blog_file, blog, blog_index);
 			}	
 
 			if ((feof(blog_file))){
@@ -171,12 +171,12 @@ int parseBlog(FILE *blog_file, int blog_index, blog_post_t *blogs){
 		//parse and set values
 
 		if (strcmp(token, "title") == 0){
-			blogs[blog_index].setTitle(value);
+			blog->blogs[blog_index].setTitle(value);
 			
 		}
 	
 		if (strcmp(token, "author") == 0){
-			blogs[blog_index].setAuthor(value);
+			blog->blogs[blog_index].setAuthor(value);
 		}	
 
 
@@ -193,12 +193,12 @@ int parseBlog(FILE *blog_file, int blog_index, blog_post_t *blogs){
 			y = std::stoi(value);
 		}
 
-		blogs[blog_index].setDate(m, d, y); //should be put somewhere else		
+		blog->blogs[blog_index].setDate(m, d, y); //should be put somewhere else		
 
 
 		if (strcmp(token, "summary") == 0){
 	
-			blogs[blog_index].setSummary(value);
+			blog->blogs[blog_index].setSummary(value);
 		}
 
 

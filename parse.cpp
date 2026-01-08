@@ -9,13 +9,13 @@
 
 
 
-int loadFiles(const char *dir, FILE *manifest_file_str){
+int loadFiles(blog_t* blog, const char *dir){
 
 	std::string manifest_dir = dir;
 	manifest_dir += "/manifest.sb";
 
-	manifest_file_str = fopen(manifest_dir.c_str(), "r");
-	if (manifest_file_str == NULL) {
+	blog->manifest_file = fopen(manifest_dir.c_str(), "r");
+	if (blog->manifest_file == NULL) {
         	std::cout << "Failed to open manifest.sb\n";
 		return 0;
     	}
@@ -27,23 +27,23 @@ int loadFiles(const char *dir, FILE *manifest_file_str){
 
 }
 
-int parsePageIndex(FILE *manifest_file_str, int &page_count_var, page_t *web_pages){
+int parsePageIndex(blog_t *blog){
 	
 	std::cout << "[page index found]\n";
 	char c = 0;
 	char page[32];
 	int page_index = 0;; //page index for class array	
-	while(!(feof(manifest_file_str))){
+	while(!(feof(blog->manifest_file))){
 
 		int i = 0; // page name index
-		while((c = fgetc(manifest_file_str)) != ';'){
+		while((c = fgetc(blog->manifest_file)) != ';'){
 			/* get page name  'name=...'*/
 			if (c != '\n' && c != ' '){
 				page[i] = c;
 				i++;
 			}
 			if (c == '['){
-				fseek(manifest_file_str, -1, SEEK_CUR);//decrement pointer
+				fseek(blog->manifest_file, -1, SEEK_CUR);//decrement pointer
 				// end of section
 				return 1;
 			}		
@@ -54,12 +54,12 @@ int parsePageIndex(FILE *manifest_file_str, int &page_count_var, page_t *web_pag
 
 		/* setup page classes */
 
-		web_pages[page_index].setTitle(page);
+		blog->web_pages[page_index].setTitle(page);
 		//web_pages[page_index].setHTML(url);
 
 		//web_pages[page_index].setSB();
 
-		page_count_var++;
+		blog->page_count++;
 		page_index++;
 		//reset and parse next line
 		initStr(page, 32);
@@ -72,16 +72,16 @@ int parsePageIndex(FILE *manifest_file_str, int &page_count_var, page_t *web_pag
 }
 
 
-int parseLib(FILE *manifest_file_str, char *main_css_str, char *blog_footer_str, char *blog_title_str, char *blog_slogan_str, char *blog_domain_str){
+int parseLib(blog_t *blog){
 	std::cout << "[lib section found]\n";
 	char c = 0;
 	char token[32];
 	char value[256];
 	int equal_set = 0; //used for including spaces
-	while(!(feof(manifest_file_str))){
+	while(!(feof(blog->manifest_file))){
 
 		int i = 0; // page name index
-		while((c = fgetc(manifest_file_str)) != '='){
+		while((c = fgetc(blog->manifest_file)) != '='){
 			/* get page name  'name=...'*/
 			if (c != '\n' && c != ' '){
 				token[i] = c;
@@ -90,7 +90,7 @@ int parseLib(FILE *manifest_file_str, char *main_css_str, char *blog_footer_str,
 
 
 			if (c == '['){
-				fseek(manifest_file_str, -1, SEEK_CUR);//decrement pointer
+				fseek(blog->manifest_file, -1, SEEK_CUR);//decrement pointer
 				// end of section
 				return 1;
 			}		
@@ -99,7 +99,7 @@ int parseLib(FILE *manifest_file_str, char *main_css_str, char *blog_footer_str,
 		equal_set = 1;
 		token[i] = 0; //null terminator
 		i = 0; // reset index
-		while((c = fgetc(manifest_file_str)) != ';'){
+		while((c = fgetc(blog->manifest_file)) != ';'){
 			/* get url */
 			if (c != '\n' && c != ' '){
 				value[i] = c;
@@ -111,7 +111,7 @@ int parseLib(FILE *manifest_file_str, char *main_css_str, char *blog_footer_str,
 				i++;		
 			}
 			if (c == '['){
-				fseek(manifest_file_str, -1, SEEK_CUR);//decrement pointer
+				fseek(blog->manifest_file, -1, SEEK_CUR);//decrement pointer
 				// end of section
 				return 1;
 			}
@@ -125,23 +125,23 @@ int parseLib(FILE *manifest_file_str, char *main_css_str, char *blog_footer_str,
 		//parse and set values
 
 		if (strcmp(token, "css") == 0){
-			strncpy(main_css_str, value, 64); 
+			strncpy(blog->main_css, value, 64); 
 		}
 	
 		if (strcmp(token, "title") == 0){
-			strncpy(blog_title_str, value, 128); 
+			strncpy(blog->blog_title, value, 128); 
 		}	
 
 
 		if (strcmp(token, "slogan") == 0){
-			strncpy(blog_slogan_str, value, 128); 
+			strncpy(blog->blog_slogan, value, 128); 
 		}
 
 		if (strcmp(token, "footer") == 0){
-			strncpy(blog_footer_str, value, 256); 
+			strncpy(blog->blog_footer, value, 256); 
 		}
 		if (strcmp(token, "domain") == 0){
-			strncpy(blog_domain_str, value, 64); 
+			strncpy(blog->blog_domain, value, 64); 
 		}
 
 		//reset and parse next line
@@ -152,27 +152,27 @@ int parseLib(FILE *manifest_file_str, char *main_css_str, char *blog_footer_str,
 
 }
 
-int parsePageSection(FILE *manifest_file_str, char *section, page_t *web_pages){
+int parsePageSection(blog_t *blog, char *section){
 	std::cout << '[' << section << " section found]\n";
 	char c = 0;
 	char token[32];
 	char value[64];
 	int page_index;
-	while(!(feof(manifest_file_str))){
+	while(!(feof(blog->manifest_file))){
 
 		int i = 0; // token index
-		while((c = fgetc(manifest_file_str)) != '='){
+		while((c = fgetc(blog->manifest_file)) != '='){
 			/* get page name  'name=...'*/
 			if (c != '\n' && c != ' '){
 				token[i] = c;
 				i++;
 			}
 			if (c == '['){
-				fseek(manifest_file_str, -1, SEEK_CUR);//decrement pointer
+				fseek(blog->manifest_file, -1, SEEK_CUR);//decrement pointer
 				// end of section
 				return 1;
 			}
-			if ((feof(manifest_file_str))){
+			if ((feof(blog->manifest_file))){
 				return 1;
 			}
 		
@@ -180,18 +180,18 @@ int parsePageSection(FILE *manifest_file_str, char *section, page_t *web_pages){
 		token[i] = 0; //null terminator
 		i = 0; // reset index
 
-		while((c = fgetc(manifest_file_str)) != ';'){
+		while((c = fgetc(blog->manifest_file)) != ';'){
 			/* get url */
 			if (c != '\n' && c != ' '){
 				value[i] = c;
 				i++;
 			}
 			if (c == '['){
-				fseek(manifest_file_str, -1, SEEK_CUR);//decrement pointer
+				fseek(blog->manifest_file, -1, SEEK_CUR);//decrement pointer
 				// end of section
 				return 1;
 			}
-			if ((feof(manifest_file_str))){
+			if ((feof(blog->manifest_file))){
 				return 1;
 			}
 		
@@ -203,21 +203,21 @@ int parsePageSection(FILE *manifest_file_str, char *section, page_t *web_pages){
 
 		if (strcmp(token, "sb") == 0){
 			
-			page_index = find_page(web_pages, section);
-			web_pages[page_index].setSB(value);
+			page_index = find_page(blog->web_pages, section);
+			blog->web_pages[page_index].setSB(value);
 
 
 		}
 		if (strcmp(token, "html") == 0){
 			
-			page_index = find_page(web_pages, section);
-			web_pages[page_index].setHTML(value);
+			page_index = find_page(blog->web_pages, section);
+			blog->web_pages[page_index].setHTML(value);
 
 
 		}
 		if (strcmp(token, "filename") == 0){
-			page_index = find_page(web_pages, section);
-			web_pages[page_index].setFName(value);
+			page_index = find_page(blog->web_pages, section);
+			blog->web_pages[page_index].setFName(value);
 
 		}
 
@@ -233,38 +233,38 @@ int parsePageSection(FILE *manifest_file_str, char *section, page_t *web_pages){
 }
 
 
-int parseManifest(FILE *manifest_file_str, int &page_count_var, page_t *web_pages, char *main_css_str, char *blog_footer_str, char *blog_title_str, char *blog_slogan_str, char *blog_domain_str){
+int parseManifest(blog_t *blog){
 	std::cout << "[PARSING MANIFEST]\n";
 	/* look for section titles */
 	char c;
 	char title[32];
 	int i = 0;
-	while(!(feof(manifest_file_str)) ){
+	while(!(feof(blog->manifest_file)) ){
 		//Looks for [
 	
-		c = fgetc(manifest_file_str);
+		c = fgetc(blog->manifest_file);
 		//std::cout << c << '\n';
 		if (c == '['){
 			//std::cout << "bracket begin\n";
-			c = fgetc(manifest_file_str);
+			c = fgetc(blog->manifest_file);
 			while (c != ']'){
 				title[i] = c;
 				i++;
-				c = fgetc(manifest_file_str);
+				c = fgetc(blog->manifest_file);
 			}
 			title[i] = 0; // add null terminator
 			//std::cout << title << '\n';
 			if (strcmp(title, "pages") == 0){
-				parsePageIndex(manifest_file_str, page_count_var, web_pages);
+				parsePageIndex(blog);
 			}
 			if (strcmp(title, "lib") == 0){
-				parseLib(manifest_file_str, main_css_str, blog_footer_str, blog_title_str, blog_slogan_str, blog_domain_str);
+				parseLib(blog);
 			}
 			/* check found pages */
 
-			int valid_page = find_page(web_pages, title);
+			int valid_page = find_page(blog->web_pages, title);
 			if (valid_page != -1){
-				parsePageSection(manifest_file_str, title, web_pages);
+				parsePageSection(blog, title);
  
 			}		
 
@@ -284,7 +284,7 @@ int parseManifest(FILE *manifest_file_str, int &page_count_var, page_t *web_page
 
 
 
-	fclose(manifest_file_str);
+	fclose(blog->manifest_file);
 	return 1; //success
 
 }

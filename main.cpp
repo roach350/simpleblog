@@ -1,6 +1,6 @@
 /*
 	SimpleBlog
-	a minimal blog generator writen in c
+	a minimal blog generator writen in C++
 
 */
 #include <stdlib.h>
@@ -81,12 +81,10 @@ int main(int argc, char *argv[]){
 	}
 	
 	if (strcmp(mode, "compile") == 0){
-		loadFiles(verb1, main_blog.manifest_file);
-		parseManifest(main_blog.manifest_file, main_blog.page_count, main_blog.web_pages, main_blog.main_css, main_blog.blog_footer, main_blog.blog_title, main_blog.blog_slogan, main_blog.blog_domain);
-		
-		findBlogs(verb1, main_blog.blogs, main_blog.blog_count);
-		parseBlogs(main_blog.blogs, main_blog.blog_count);
-		//sortBlogs(blogs, blog_count);
+		loadFiles(&main_blog, verb1);
+		parseManifest(&main_blog);
+		findBlogs(verb1, &main_blog);
+		parseBlogs(&main_blog);
 		writeAll(&main_blog, verb1);
 
 
@@ -95,13 +93,15 @@ int main(int argc, char *argv[]){
 	}	
 	
 	if (strcmp(mode, "parse") == 0){
-		loadFiles(verb1, main_blog.manifest_file);
-		parseManifest(main_blog.manifest_file, main_blog.page_count, main_blog.web_pages, main_blog.main_css, main_blog.blog_footer, main_blog.blog_title, main_blog.blog_slogan, main_blog.blog_domain);
-		
-		findBlogs(verb1, main_blog.blogs, main_blog.blog_count);
-		parseBlogs(main_blog.blogs, main_blog.blog_count);
+		loadFiles(&main_blog, verb1);
+		parseManifest(&main_blog);
+		findBlogs(verb1, &main_blog);
+		parseBlogs(&main_blog);
 
 	}	
-	
+
+
+	delete[] main_blog.web_pages;
+	delete[] main_blog.blogs;	
 	return 0;
 }
